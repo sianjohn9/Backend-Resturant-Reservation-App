@@ -2,12 +2,12 @@
 
 const knex = require("../db/connection");
 
-async function list(date) {
-return knex("reservations")
-.select("*")
-.where({ status: "booked", reservation_date: date })
-.orWhere({ status: "seated", reservation_date: date })
-.orderBy("reservation_time");
+function list(date) {
+  
+  return knex("reservations")
+    .where("reservation_date", date)
+    .whereNotIn("status", ["finished", "cancelled"]) 
+    .orderBy("reservation_time");
 }
 
 function read(reservation_id) {
