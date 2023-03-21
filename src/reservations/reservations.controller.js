@@ -242,11 +242,11 @@ async function destroy(req, res) {
  * List handler (basic) for reservation resources
  */
 async function list(req, res) {
-  const { date, mobile_number } = req.query;
-  const reservation = await (mobile_number
-    ? reservationsService.search(mobile_number)
-    : reservationsService.list(date));
-  res.json({ data: reservation });
+const { date, mobileNumber } = res.locals;
+const data = mobileNumber
+? await service.search(mobileNumber)
+: await service.list(date);
+res.json({ data });
 }
 
 module.exports = {
